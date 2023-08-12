@@ -3,7 +3,6 @@ import './ReportBug.css';
 
 
 function ReportBug() {
-    console.log("Renderizando ReportBug");
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [status, setStatus] = useState('Aberto');
@@ -20,7 +19,7 @@ function ReportBug() {
             category_id: category,
         };
         try {
-            const response = await fetch('/api/reportBug', {
+            const response = await fetch('http://localhost:8000/report/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
