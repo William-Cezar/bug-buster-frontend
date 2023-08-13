@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import bugImage from './bug.png';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
@@ -9,15 +9,33 @@ function App() {
     const [password, setPassword] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    useEffect(() => {
+        fetch("https://mbabugbuster.rj.r.appspot.com/is_authenticated/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(data => {
+            setIsLoggedIn(data.is_authenticated);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    }, []);
+
     function handleLogin(event) {
         event.preventDefault();
-    
-        fetch("http://localhost:8000/api/login/", {
+
+        fetch("https://mbabugbuster.rj.r.appspot.com/login/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password }),
+            credentials: 'include'
         })
         .then(response => response.json())
         .then(data => {

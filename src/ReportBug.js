@@ -19,12 +19,13 @@ function ReportBug() {
             category_id: category,
         };
         try {
-            const response = await fetch('http://localhost:8000/report/', {
+            const response = await fetch('https://mbabugbuster.rj.r.appspot.com/report/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(bugData)
+                body: JSON.stringify(bugData),
+                credentials: 'include'
             });
             const data = await response.json();
             if (data.success) {
